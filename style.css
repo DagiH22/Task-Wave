@@ -1,0 +1,45 @@
+* {
+    border: none;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: aqua;
+}
+
+header {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 20vh; /* Adjusted for better layout */
+    position: relative;
+    padding: 0 20px;
+}
+
+h1 {
+    margin: 0 auto;
+}
+
+.modeToggle {
+    position: absolute;
+    right: 20px;
+    padding: 10px 20px;
+    border-radius: 10%;
+    background-color: blue;
+}
+section{
+    position: relative;
+}
+.add{
+    background-color: blue;
+    color: white;
+    padding: 15px 10px;
+    border-radius: 50%;
+    position: absolute;
+    right: 20px;
+
+}
+
