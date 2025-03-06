@@ -6,21 +6,27 @@
     <link rel="stylesheet" href="style.css">
     <title>To Do </title>
 </head>
+
 <body>
-    <header>
-        <h1>TODO List</h1>
-        <button class="modeToggle">Mode</button> 
-    </header>
-    <section>
-        <main>
-            <ul class="listOfTasks">
-                <li><input type="checkbox" name="a" id="list1"> a <button class="delete">D</button></li>
-                <li><input type="checkbox" name="b" id="list2"> b <button class="delete">D</button></li>
-                <li><input type="checkbox" name="c" id="list3"> c <button class="delete">D</button></li>
-            </ul>      
+    <div class="container">
+        <header>
+            <h1>TODO List</h1>
+            <button class="modeToggle"> <img class="modeImg" src="./images/sun-svgrepo-com.svg" alt="day/night mode"></button> 
+        </header>
+        <main class="mainContainer">
+    
+            <section class="newTaskContainer">
+                <input type="text" class="newTask">
+                <button class="add"><img class="addImg" src="./images/add-plus-circle-svgrepo-com.svg" alt="add new task"> New Task</button>
+            </section>
+            
+            <main>
+                <ul class="listOfTasks">
+                    
+                </ul>      
+            </main>
         </main>
-        <button class="add">ADD</button>
-    </section>
+    </div>
 
 
     <script src="script.js"></script>
