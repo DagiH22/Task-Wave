@@ -5,6 +5,8 @@ const newTask = document.querySelector('.newTask');
 const del = document.querySelectorAll('.delete');
 const container = document.querySelector('.container')
 const body = document.body
+const modeImage = document.querySelector('.modeImg')
+const cont = document.querySelector('.newTaskContainer')
 
 let tobBeSaved = loadTasks();
 renderTask();
@@ -55,16 +57,16 @@ tasks.addEventListener('click', e => {
 });
 
 const setTheme = theme => {
-    if(theme === 'dark'){
-        container.classList.add('dark');
-        tasks.classList.add('dark');
-        body.classList.add('dark');
-    }
-    else {
-        container.classList.remove('dark');
-        tasks.classList.remove('dark');
-        body.classList.remove('dark');
-    }
+    const darks = [container,tasks,body,cont,newTask];
+    darks.forEach(dark =>{
+        if(theme === 'dark'){
+            dark.classList.add('dark');
+            modeImage.src = "./images/sun-svgrepo-com.svg";}
+        else {
+            modeImage.src = "./images/night-mode-svgrepo-com.svg"
+            dark.classList.remove('dark');
+        }
+    })
     localStorage.setItem('theme',theme)
 }
 
@@ -94,7 +96,7 @@ function renderTask(){
     load.forEach(task =>{
         let li = document.createElement('li')
         li.innerHTML = `<section class="inLi">
-                            <input type="checkbox"> 
+                            <input type="checkbox" ${task.completed ? 'checked' : ''}> 
                             <p class = ${task.completed ? "done" : ""}> ${task.text} </p> 
                         </section> 
                         <button class="delete">
