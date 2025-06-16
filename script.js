@@ -4,7 +4,7 @@ const mode = document.querySelector('.modeToggle');
 const newTask = document.querySelector('.newTask');
 const del = document.querySelectorAll('.delete');
 const container = document.querySelector('.container')
-const body = document.body
+const body = document.querySelector('body')
 const modeImage = document.querySelector('.modeImg')
 const cont = document.querySelector('.newTaskContainer')
 // const list =document.querySelectorA('li')
@@ -70,6 +70,7 @@ const setTheme = theme => {
         darks.forEach(dark =>{
             dark.classList.add('dark');
             modeImage.src = "./images/sun-svgrepo-com.svg";})
+        console.log(body.classList)
     }
    
     else {
@@ -77,6 +78,7 @@ const setTheme = theme => {
         modeImage.src = "./images/night-mode-svgrepo-com.svg"
         darks.forEach(dark =>{
         dark.classList.remove('dark');})
+        console.log(body.classList)
     }
     
     localStorage.setItem('theme',theme)
@@ -101,32 +103,6 @@ mode.addEventListener('click', () => {
     setTheme(currentTheme === 'dark' ? 'light' : 'dark');
 });
 
-// function renderTask(){
-//    let load =  loadTasks()
-//    tasks.innerHTML = ""
- 
-//     load.forEach(task =>{
-//         let li = document.createElement('li')
-//         li.innerHTML = `<section class="inLi">
-//                             <input type="checkbox" ${task.completed ? 'checked' : ''}> 
-//                             <p class = ${task.completed ? "done" : ""}> ${task.text} </p> 
-//                         </section> 
-//                         <button class="delete">
-//                             <img class = "delete deleteImg" src="./images/delete-svgrepo-com.svg" alt="delete a task"> 
-//                         </button>`
-//         tasks.appendChild(li)
-
-//         let checkbox = li.querySelector("input");
-//             checkbox.addEventListener("change", () => {
-//                 let taskIndex = tobBeSaved.findIndex(t => t.text === task.text);
-//                 tobBeSaved[taskIndex].completed = checkbox.checked;
-//                 saveTask();
-//             });
-    
-// })
-// }
-
-
 function renderTask() {
     let load = loadTasks();
     tasks.innerHTML = "";
@@ -134,7 +110,7 @@ function renderTask() {
     let filteredTasks = load.filter(task => {
         if (currentFilter === "active") return !task.completed;
         if (currentFilter === "completed") return task.completed;
-        return true; // for "all"
+        return true; 
     });
 
     filteredTasks.forEach(task => {
@@ -153,16 +129,10 @@ function renderTask() {
             let taskIndex = tobBeSaved.findIndex(t => t.text === task.text);
             tobBeSaved[taskIndex].completed = checkbox.checked;
             saveTask();
-            renderTask(); // re-render after checkbox change
+            renderTask(); 
         });
     });
 }
-
-
-
-
-
-
 
 function loadTasks(){
     return JSON.parse(localStorage.getItem('tasks')) || [];
@@ -171,9 +141,6 @@ function saveTask(){
     localStorage.setItem("tasks",JSON.stringify(tobBeSaved))
 };
 
-
-
-
 function renderTask() {
     let load = loadTasks();
     tasks.innerHTML = "";
@@ -204,9 +171,6 @@ function renderTask() {
         });
     });
 }
-
-
-
 
 tabButtons.forEach(btn => {
     btn.addEventListener('click', () => {
