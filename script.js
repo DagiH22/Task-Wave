@@ -148,7 +148,7 @@ function renderTask() {
     let filteredTasks = load.filter(task => {
         if (currentFilter === "active") return !task.completed;
         if (currentFilter === "completed") return task.completed;
-        return true; // for "all"
+        return true; 
     });
 
     filteredTasks.forEach(task => {
@@ -167,7 +167,7 @@ function renderTask() {
             let taskIndex = tobBeSaved.findIndex(t => t.text === task.text);
             tobBeSaved[taskIndex].completed = checkbox.checked;
             saveTask();
-            renderTask(); // re-render after checkbox change
+            renderTask(); 
         });
     });
 }
