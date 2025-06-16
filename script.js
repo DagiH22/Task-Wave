@@ -7,6 +7,12 @@ const container = document.querySelector('.container')
 const body = document.body
 const modeImage = document.querySelector('.modeImg')
 const cont = document.querySelector('.newTaskContainer')
+// const list =document.querySelectorA('li')
+// const done= document.querySelector('.done')
+const header = document.querySelector('header')
+const tabButtons = document.querySelectorAll('.tab');
+
+let currentFilter = "all";
 
 let tobBeSaved = loadTasks();
 renderTask();
@@ -27,6 +33,7 @@ const addTask = e =>{
         tobBeSaved.push({ text: value, completed: false });
 
         saveTask();
+        tasks.scrollTop = tasks.scrollHeight;
         newTask.value = "";
     } 
 }
@@ -57,16 +64,21 @@ tasks.addEventListener('click', e => {
 });
 
 const setTheme = theme => {
-    const darks = [container,tasks,body,cont,newTask];
-    darks.forEach(dark =>{
-        if(theme === 'dark'){
+    const darks = [container,header,newTask,addNewTask];
+    if(theme === 'dark'){
+        body.classList.add('dark');
+        darks.forEach(dark =>{
             dark.classList.add('dark');
-            modeImage.src = "./images/sun-svgrepo-com.svg";}
-        else {
-            modeImage.src = "./images/night-mode-svgrepo-com.svg"
-            dark.classList.remove('dark');
-        }
-    })
+            modeImage.src = "./images/sun-svgrepo-com.svg";})
+    }
+   
+    else {
+        body.classList.remove('dark');
+        modeImage.src = "./images/night-mode-svgrepo-com.svg"
+        darks.forEach(dark =>{
+        dark.classList.remove('dark');})
+    }
+    
     localStorage.setItem('theme',theme)
 }
 
@@ -83,36 +95,74 @@ window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e)
     setTheme(newTheme);
 });
 
-// to manualy change the theme
+//manualy change the theme
 mode.addEventListener('click', () => {
     const currentTheme = document.body.classList.contains('dark') ? 'dark' : 'light';
     setTheme(currentTheme === 'dark' ? 'light' : 'dark');
 });
 
-function renderTask(){
-   let load =  loadTasks()
-   tasks.innerHTML = ""
+// function renderTask(){
+//    let load =  loadTasks()
+//    tasks.innerHTML = ""
  
-    load.forEach(task =>{
-        let li = document.createElement('li')
+//     load.forEach(task =>{
+//         let li = document.createElement('li')
+//         li.innerHTML = `<section class="inLi">
+//                             <input type="checkbox" ${task.completed ? 'checked' : ''}> 
+//                             <p class = ${task.completed ? "done" : ""}> ${task.text} </p> 
+//                         </section> 
+//                         <button class="delete">
+//                             <img class = "delete deleteImg" src="./images/delete-svgrepo-com.svg" alt="delete a task"> 
+//                         </button>`
+//         tasks.appendChild(li)
+
+//         let checkbox = li.querySelector("input");
+//             checkbox.addEventListener("change", () => {
+//                 let taskIndex = tobBeSaved.findIndex(t => t.text === task.text);
+//                 tobBeSaved[taskIndex].completed = checkbox.checked;
+//                 saveTask();
+//             });
+    
+// })
+// }
+
+
+function renderTask() {
+    let load = loadTasks();
+    tasks.innerHTML = "";
+
+    let filteredTasks = load.filter(task => {
+        if (currentFilter === "active") return !task.completed;
+        if (currentFilter === "completed") return task.completed;
+        return true; // for "all"
+    });
+
+    filteredTasks.forEach(task => {
+        let li = document.createElement('li');
         li.innerHTML = `<section class="inLi">
                             <input type="checkbox" ${task.completed ? 'checked' : ''}> 
-                            <p class = ${task.completed ? "done" : ""}> ${task.text} </p> 
+                            <p class="${task.completed ? "done" : ""}"> ${task.text} </p> 
                         </section> 
                         <button class="delete">
-                            <img class = "delete deleteImg" src="./images/delete-svgrepo-com.svg" alt="delete a task"> 
-                        </button>`
-        tasks.appendChild(li)
+                            <img class="delete deleteImg" src="./images/delete-svgrepo-com.svg" alt="delete a task"> 
+                        </button>`;
+        tasks.appendChild(li);
 
         let checkbox = li.querySelector("input");
-            checkbox.addEventListener("change", () => {
-                let taskIndex = tobBeSaved.findIndex(t => t.text === task.text);
-                tobBeSaved[taskIndex].completed = checkbox.checked;
-                saveTask();
-            });
-    
-})
+        checkbox.addEventListener("change", () => {
+            let taskIndex = tobBeSaved.findIndex(t => t.text === task.text);
+            tobBeSaved[taskIndex].completed = checkbox.checked;
+            saveTask();
+            renderTask(); // re-render after checkbox change
+        });
+    });
 }
+
+
+
+
+
+
 
 function loadTasks(){
     return JSON.parse(localStorage.getItem('tasks')) || [];
@@ -120,3 +170,51 @@ function loadTasks(){
 function saveTask(){
     localStorage.setItem("tasks",JSON.stringify(tobBeSaved))
 };
+
+
+
+
+function renderTask() {
+    let load = loadTasks();
+    tasks.innerHTML = "";
+
+    let filteredTasks = load.filter(task => {
+        if (currentFilter === "active") return !task.completed;
+        if (currentFilter === "completed") return task.completed;
+        return true; // for "all"
+    });
+
+    filteredTasks.forEach(task => {
+        let li = document.createElement('li');
+        li.innerHTML = `<section class="inLi">
+                            <input type="checkbox" ${task.completed ? 'checked' : ''}> 
+                            <p class="${task.completed ? "done" : ""}"> ${task.text} </p> 
+                        </section> 
+                        <button class="delete">
+                            <img class="delete deleteImg" src="./images/delete-svgrepo-com.svg" alt="delete a task"> 
+                        </button>`;
+        tasks.appendChild(li);
+
+        let checkbox = li.querySelector("input");
+        checkbox.addEventListener("change", () => {
+            let taskIndex = tobBeSaved.findIndex(t => t.text === task.text);
+            tobBeSaved[taskIndex].completed = checkbox.checked;
+            saveTask();
+            renderTask(); // re-render after checkbox change
+        });
+    });
+}
+
+
+
+
+tabButtons.forEach(btn => {
+    btn.addEventListener('click', () => {
+        document.querySelector('.tab.active').classList.remove('active');
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        renderTask();
+    });
+});
+
+

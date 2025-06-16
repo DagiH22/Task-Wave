@@ -3,27 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="fa.css">
     <title>To Do </title>
 </head>
 
 <body>
     <div class="container">
-        <header>
-                <h1>TODO List</h1>
-                <button class="modeToggle"> <img class="modeImg" src="./images/sun-svgrepo-com.svg" alt="day/night mode"></button> 
-        </header>
+        <div class="bg">
+            <header>
+                    <h1>TODO List</h1>
+                    <button class="modeToggle"> <img class="modeImg" src="./images/sun-svgrepo-com.svg" alt="day/night mode" width="50px" height="50px"></button> 
+            </header>
+        </div>
         <main class="mainContainer">
     
             <section class="newTaskContainer">
                 <input type="text" class="newTask" placeholder="Write task here ...">
-                <button class="add"><img class="addImg" src="./images/add-plus-circle-svgrepo-com.svg" alt="add new task"> Add Task</button>
+                <button class="add"><img class="addImg" src="./images/add-plus-circle-svgrepo-com.svg" alt="add new task" width="50px" height="50px"> Add Task</button>
             </section>
             
-            <section class="taskContainer">
+           
                 <ul class="listOfTasks"> </ul>      
-            </section>
+           
         </main>
+        <!-- <div class="tabs">
+            <button class="tabBtn current" data-filter="all">All tasks</span></button>
+            <button class="tabBtn"data-filter="completed">Completed tasks</span></button>
+            <button class="tabBtn" data-filter="active">Active tasks</span></button>
+        </div> -->
+        <div class="tabs">
+            <button class="tab active" data-filter="all">All</button>
+            <button class="tab" data-filter="active">Active</button>
+            <button class="tab" data-filter="completed">Completed</button>
+          </div>
+          
     </div>
 
     <script src="script.js"></script>
