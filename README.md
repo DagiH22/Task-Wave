@@ -1,3 +1,4 @@
+# Task-Wave
 This is a simple front-end app that helps you to stay organized and track what you have planned for the day.
 ## 🚀 Features
 - ➕  Add new tasks
